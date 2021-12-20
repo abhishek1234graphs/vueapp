@@ -15,8 +15,8 @@ const routes = [
         
         { path: '/register',component:CoachDetailRegistration},
         { path: '/requests',component:RequestsReceived},
-        { path: '/:notFound(.*)',component:NotFound},
         { path:'/',redirect:'/coaches'},
+        { path: '/:notFound(.*)',component:NotFound},
     
 ];
 
