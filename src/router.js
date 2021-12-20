@@ -8,9 +8,13 @@ import RequestsReceived from './pages/requests/RequestsReceived.vue';
 import NotFound from './pages/NotFound.vue';
 
 const routes = [
-        { path: '/coaches/:id',component:CoachDetail,children:[
-            {path:'contact',component:ContactCoach} // /contact/c1/contact
-        ]},
+        {   path: '/coaches/:id',
+            component:CoachDetail,
+            props:true,
+            children:[
+                {path:'contact',component:ContactCoach} // /contact/c1/contact
+            ]
+        },
         { path: '/coaches',component:CoachesList},
         
         { path: '/register',component:CoachDetailRegistration},
