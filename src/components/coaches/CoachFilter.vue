@@ -4,15 +4,15 @@
             Find Your Coach
         </h2>
         <span class="filter-options">
-            <input type="checkbox" id="frontend" checked @change="setFilter" />
+            <input type="checkbox" id="frontend" @change="setFilter" />
             <label for="frontend">frontend</label>
         </span>
         <span class="filter-options">
-            <input type="checkbox" id="backend" checked @change="setFilter" />
+            <input type="checkbox" id="backend" @change="setFilter" />
             <label for="backend">backend</label>
         </span>
         <span class="filter-options">
-            <input type="checkbox" id="career" checked @change="setFilter" />
+            <input type="checkbox" id="career" @change="setFilter" />
             <label for="career">career</label>
         </span>
     </base-card>
@@ -24,9 +24,9 @@ export default {
     data(){
         return {
             filters:{
-                frontend:true,
-                backend:true,
-                careers:true
+                frontend:false,
+                backend:false,
+                careers:false
             }
         }
     },

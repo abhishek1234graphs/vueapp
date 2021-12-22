@@ -34,9 +34,9 @@ export default {
     data(){
         return {
             activeFilters:{
-                frontend:true,
-                backend:true,
-                career:true
+                frontend:false,
+                backend:false,
+                career:false
             }
         }
     },
