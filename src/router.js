@@ -7,6 +7,7 @@ import ContactCoach from './pages/requests/ContactCoach.vue';
 import RequestsReceived from './pages/requests/RequestsReceived.vue';
 import NotFound from './pages/NotFound.vue';
 import UserAuth from './pages/auth/UserAuth.vue';
+import store from './store/index.js';
 
 const routes = [
         {   path: '/coaches/:id',
@@ -18,12 +19,13 @@ const routes = [
         },
         { path: '/coaches',component:CoachesList},
         
-        { path: '/register',component:CoachDetailRegistration},
-        { path: '/requests',component:RequestsReceived},
-        { path: '/auth',component: UserAuth},
+        { path: '/register',component:CoachDetailRegistration, meta:{ requiresAuth :true} },
+        { path: '/requests',component:RequestsReceived , meta:{ requiresAuth :true}},
+        { path: '/auth',component: UserAuth , meta:{ requiresUnauth :true}},
         { path:'/',redirect:'/coaches'},
         { path: '/:notFound(.*)',component:NotFound},
     
 ];
+
 
 export default routes;

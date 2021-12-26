@@ -1,14 +1,14 @@
 <template>
     <span> 
-        <base-dialog :show="!!error" title="An error occured">
+        <base-dialog :show="!!error" title="An error occured" @close="handleError">
             <p>{{ error }}</p>
         </base-dialog>
-        <base-dialog :v-show="isLoading" fixed title="Authenticating...">
+        <base-dialog :show="isLoading" title="Authenticating...">
             
             <base-spinner></base-spinner>
         </base-dialog>
         <base-card>
-            <form @submit.prevent="submitForm">
+            <form @submit.prevent>
                 <div class="form-control">
                     <label for="email">Email</label>
                     <input type="email" id="email" v-model.trim="email" />
@@ -19,14 +19,14 @@
                 </div>
                 <p v-if="!formIsValid">Please enter a valid email and password</p>
                 
-                 <base-button>
+                 <base-button @click.native="submitForm()">
                 {{ submitButtonCaption }}
                 </base-button>
-                
+                <base-button type="button" mode="flat" @click.native="switchAuthMode">
+                {{ switchModeButtonCaption }}
+                </base-button>
             </form>
-            <base-button type="button" mode="flat" @click.native="switchAuthMode">
-            {{ switchModeButtonCaption }}
-            </base-button>
+            
         </base-card>
     </span>
 </template>
@@ -47,16 +47,23 @@ export default {
         }
     },
     methods:{
+        handleError(){
+            this.error = null;
+        },
         async submitForm(){
             this.formIsValid = true;
             this.isLoading = true;
             if(this.email==='' || !this.email.includes('@') || this.password.length < 6){
                 this.formIsValid = false;
+                this.isLoading = false
                 return;
             }
             try{
                 if(this.mode==='login'){
-
+                    await this.$store.dispatch('login',{
+                        email: this.email,
+                        password: this.password
+                    })
                 }else{
                     await this.$store.dispatch('signup',{
                         email: this.email,
@@ -68,6 +75,9 @@ export default {
             }
             
             this.isLoading = false;
+            const redirectUrl = '/'+(this.$route.query.redirect || 'coaches');
+            this.$router.push(redirectUrl);
+
         },
         switchAuthMode(){
             
@@ -101,7 +111,7 @@ export default {
 <style scoped>
 form {
   margin: 1rem;
-  border: 1px solid #ccc;
+  
   border-radius: 12px;
   padding: 1rem;
 }
